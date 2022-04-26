@@ -3,11 +3,14 @@ import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Search from './components/Search';
+import ImageCard from './components/ImageCard';
 
+// eslint-disable-next-line no-undef
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
 
 const App = () => {
   const [word, setWord] = useState('');
+  const [images, setImages] = useState([]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setImages([{ ...data, title: word }, ...images]);
       })
       .catch((err) => {
         console.log(err);
@@ -27,10 +30,14 @@ const App = () => {
 
   return (
     <div>
-      <Header title="Images Gallery"/>
-      <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit}/>
+      <Header title="Images Gallery" />
+      <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
+      {images.map((image, i) => (
+        // eslint-disable-next-line react/jsx-key
+        <ImageCard key={i} image={image} />
+      ))}
     </div>
   );
-}
+};
 
 export default App;
