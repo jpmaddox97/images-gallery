@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 
-const ImageCard = ({ image }) => {
+const ImageCard = ({ image, deleteImage }) => {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img 
@@ -14,14 +14,15 @@ const ImageCard = ({ image }) => {
         <Card.Text>
           {image.description || image.alt_description}
         </Card.Text>
-        <Button variant="primary">Delete</Button>
+        <Button variant="primary" onClick={() => deleteImage(image.id)}>Delete</Button>
       </Card.Body>
     </Card>
   );
 };
 
 ImageCard.propTypes = {
-  image: PropTypes.object
+  image: PropTypes.object,
+  deleteImage: PropTypes.func
 }
 
 export default ImageCard;
